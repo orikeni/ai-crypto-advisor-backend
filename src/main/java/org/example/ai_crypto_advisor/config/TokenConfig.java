@@ -21,7 +21,7 @@ public class TokenConfig {
         return Jwts.builder()
                 .claims(this.buildClaims(user))
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 60 * 1000 * 30))
+                .expiration(new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 30))
                 .signWith(SignatureAlgorithm.HS256, jwtSecret)
                 .compact();
     }

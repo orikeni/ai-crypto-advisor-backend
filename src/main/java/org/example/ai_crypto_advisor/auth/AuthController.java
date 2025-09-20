@@ -5,9 +5,12 @@ import org.example.ai_crypto_advisor.config.TokenResponse;
 import org.example.ai_crypto_advisor.user.User;
 import org.example.ai_crypto_advisor.user.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -17,19 +20,24 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/login")
-    public TokenResponse login (@RequestBody LoginRequest loginRequest) {
-        return authService.login(loginRequest);
+    public ResponseEntity<?> login (@RequestBody LoginRequest loginRequest) {
+        TokenResponse tokenResponse = authService.login(loginRequest);
+        if (tokenResponse == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("error", "Invalid email or password"));
+        }
+        return ResponseEntity.ok(tokenResponse);
     }
 
     @PostMapping("/registration")
-    public TokenResponse registration (@RequestBody UserDTO user) {
-        System.out.println(user.getName()+" "+user.getPassword());
+    public ResponseEntity<?> registration(@RequestBody UserDTO user) {
         User saved = new User();
         saved.setName(user.getName());
         saved.setPassword(user.getPassword());
         saved.setEmail(user.getEmail());
-        System.out.println(saved.getName()+" "+saved.getPassword());
-        return authService.register(saved);
+
+        TokenResponse tokenResponse = authService.register(saved);
+        return ResponseEntity.ok(tokenResponse);
     }
 
     @GetMapping("/ping")

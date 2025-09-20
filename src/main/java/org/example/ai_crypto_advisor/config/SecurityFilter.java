@@ -1,5 +1,6 @@
 package org.example.ai_crypto_advisor.config;
 
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,23 +28,39 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        String tokenHeader = request.getHeader("Authorization");
-        if (tokenHeader == null || !tokenHeader.startsWith("Bearer ")) {
+
+        String path = request.getRequestURI();
+
+        if (path.startsWith("/api/auth/")) {
             filterChain.doFilter(request, response);
+            return;
         }
-        else {
-            String token = tokenHeader.replace("Bearer ", "");
-            try {
-                String userName = tokenConfig.getUserNameFromToken(token);
-                User user = (User) this.userService.loadUserByUsername(userName);
-                SecurityContextHolder.getContext().setAuthentication
-                        (new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities()));
-                filterChain.doFilter(request, response);
-            }
-            catch (SignatureException signatureException) {
-                System.out.println(signatureException.getMessage());
+
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            response.setStatus(HttpServletResponse.SC_OK);
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        String tokenHeader = request.getHeader("Authorization");
+
+        if (tokenHeader != null && tokenHeader.startsWith("Bearer ")) {
+            String token = tokenHeader.replace("Bearer ", "").trim();
+
+            if (!token.isEmpty()) {
+                try {
+                    String userName = tokenConfig.getUserNameFromToken(token);
+                    User user = (User) this.userService.loadUserByUsername(userName);
+
+                    SecurityContextHolder.getContext().setAuthentication(
+                            new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities())
+                    );
+                } catch (JwtException | SignatureException e) {
+                    System.out.println("Invalid JWT: " + e.getMessage());
+                }
             }
         }
 
+        filterChain.doFilter(request, response);
     }
 }
