@@ -1,0 +1,28 @@
+spring.application.name=AI_Crypto_advisor
+
+# Database
+spring.datasource.url=jdbc:sqlite:dev.db
+spring.datasource.driver-class-name=org.sqlite.JDBC
+
+# JWT Secret - Change this!
+app.jwt.secret=YOUR_RANDOM_SECRET_HERE
+
+# Feature Flags
+prices.live=true
+news.live=true
+ai.live=true
+
+# API Keys - Get your own keys!
+cryptopanic.api.key=YOUR_CRYPTOPANIC_KEY
+openrouter.api.key=YOUR_OPENROUTER_KEY
+coingecko.api.key=YOUR_COINGECKO_KEY
+
+# Hibernate
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.community.dialect.SQLiteDialect
+
+# Management
+management.endpoints.web.exposure.include=health,info
+management.endpoint.health.show-details=never

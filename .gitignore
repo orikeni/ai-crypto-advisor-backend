@@ -1,0 +1,38 @@
+# Java
+*.class
+*.log
+hs_err_pid*
+replay_pid*
+
+# Maven / Gradle
+/target/
+/build/
+*.jar
+*.war
+*.ear
+
+# IDE
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+
+# VSCode
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Database - לא להעלות DB מקומי
+dev.db
+*.db
+
+# Application Properties - SECRETS!
+src/main/resources/application.properties
+src/main/resources/application-*.properties
+
+# Logs
+logs/
+*.log
