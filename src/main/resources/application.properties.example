@@ -1,27 +1,31 @@
 spring.application.name=AI_Crypto_advisor
+server.port=${PORT:8080}
 
 # Database
-spring.datasource.url=jdbc:sqlite:dev.db
-spring.datasource.driver-class-name=org.sqlite.JDBC
+# DATABASE_URL=jdbc:postgresql://<host>:<port>/<db>?user=<user>&password=<password>
+spring.datasource.url=${DATABASE_URL:jdbc:sqlite:dev.db}
+spring.datasource.driver-class-name=${DB_DRIVER:org.sqlite.JDBC}
 
-# JWT Secret - Change this!
-app.jwt.secret=YOUR_RANDOM_SECRET_HERE
+# Hibernate
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.properties.hibernate.dialect=${HIBERNATE_DIALECT:org.hibernate.community.dialect.SQLiteDialect}
+
+
+# JWT Secret
+app.jwt.secret=${APP_JWT_SECRET:CHANGE_ME_FOR_LOCAL}
 
 # Feature Flags
 prices.live=true
 news.live=true
 ai.live=true
 
-# API Keys - Get your own keys!
-cryptopanic.api.key=YOUR_CRYPTOPANIC_KEY
-openrouter.api.key=YOUR_OPENROUTER_KEY
-coingecko.api.key=YOUR_COINGECKO_KEY
+# API Keys
+cryptopanic.api.key=${CRYPTOPANIC_API_KEY:YOUR_CRYPTOPANIC_KEY}
+openrouter.api.key=${OPENROUTER_API_KEY:YOUR_OPENROUTER_KEY}
+coingecko.api.key=${COINGECKO_API_KEY:YOUR_COINGECKO_KEY}
 
-# Hibernate
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true
-spring.jpa.properties.hibernate.format_sql=true
-spring.jpa.properties.hibernate.dialect=org.hibernate.community.dialect.SQLiteDialect
 
 # Management
 management.endpoints.web.exposure.include=health,info
