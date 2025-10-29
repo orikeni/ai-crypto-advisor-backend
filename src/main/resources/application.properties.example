@@ -3,19 +3,17 @@ server.port=${PORT:8080}
 
 # Database
 spring.datasource.url=${DATABASE_URL}
-spring.datasource.driver-class-name=${DB_DRIVER:org.postgresql.Driver}
-spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
-
+spring.datasource.driver-class-name=${DB_DRIVER}
+spring.jpa.database-platform=${HIBERNATE_DIALECT}
 
 # Hibernate
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.format_sql=true
-spring.jpa.properties.hibernate.dialect=${HIBERNATE_DIALECT:org.hibernate.dialect.PostgreSQLDialect}
 
 
 # JWT Secret
-app.jwt.secret=${APP_JWT_SECRET:CHANGE_ME_FOR_LOCAL}
+app.jwt.secret=${APP_JWT_SECRET}
 
 # Feature Flags
 prices.live=true
@@ -23,9 +21,9 @@ news.live=true
 ai.live=true
 
 # API Keys
-cryptopanic.api.key=${CRYPTOPANIC_API_KEY:YOUR_CRYPTOPANIC_KEY}
-openrouter.api.key=${OPENROUTER_API_KEY:YOUR_OPENROUTER_KEY}
-coingecko.api.key=${COINGECKO_API_KEY:YOUR_COINGECKO_KEY}
+cryptopanic.api.key=${CRYPTOPANIC_API_KEY}
+openrouter.api.key=${OPENROUTER_API_KEY}
+coingecko.api.key=${COINGECKO_API_KEY}
 
 
 # Management
