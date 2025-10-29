@@ -9,23 +9,28 @@ import java.util.concurrent.ThreadLocalRandom;
 @Service
 public class MemeServiceImpl implements MemeService {
 
-    private static final String[] MEME_URLS = {
-            "http://localhost:8080/memes/meme1.jpg",
-            "http://localhost:8080/memes/meme2.jpg",
-            "http://localhost:8080/memes/meme3.jpg",
-            "http://localhost:8080/memes/meme4.jpg",
-            "http://localhost:8080/memes/meme5.jpg",
-            "http://localhost:8080/memes/meme6.jpg",
-            "http://localhost:8080/memes/meme7.jpg",
+    private static final String BASE_URL = System.getenv().getOrDefault(
+            "BACKEND_BASE_URL",
+            "http://localhost:8080"
+    );
+
+    private static final String[] MEME_NAMES = {
+            "meme1.jpg",
+            "meme2.jpg",
+            "meme3.jpg",
+            "meme4.jpg",
+            "meme5.jpg",
+            "meme6.jpg",
+            "meme7.jpg",
     };
 
     @Override
     public String getRandomMeme(Set<String> interestedAssets) {
         try {
-            int i = ThreadLocalRandom.current().nextInt(MEME_URLS.length);
-            return MEME_URLS[i];
+            int i = ThreadLocalRandom.current().nextInt(MEME_NAMES.length);
+            return BASE_URL + "/memes/" + MEME_NAMES[i];
         } catch (Exception e) {
-            return "/memes/meme1.jpg";
+            return BASE_URL + "/memes/meme1.jpg";
         }
     }
 }
