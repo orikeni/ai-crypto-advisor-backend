@@ -2,15 +2,14 @@ spring.application.name=AI_Crypto_advisor
 server.port=${PORT:8080}
 
 # Database
-# DATABASE_URL=jdbc:postgresql://<host>:<port>/<db>?user=<user>&password=<password>
 spring.datasource.url=${DATABASE_URL:jdbc:sqlite:dev.db}
-spring.datasource.driver-class-name=${DB_DRIVER:org.sqlite.JDBC}
+spring.datasource.driver-class-name=${DB_DRIVER:org.postgresql.Driver}
 
 # Hibernate
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.format_sql=true
-spring.jpa.properties.hibernate.dialect=${HIBERNATE_DIALECT:org.hibernate.community.dialect.SQLiteDialect}
+spring.jpa.properties.hibernate.dialect=${HIBERNATE_DIALECT:org.hibernate.dialect.PostgreSQLDialect}
 
 
 # JWT Secret
