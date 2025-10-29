@@ -10,10 +10,9 @@ COPY --from=builder /app/target/AI_Crypto_advisor-0.0.1-SNAPSHOT.jar app.jar
 
 EXPOSE 8080
 
-# Environment variables will be passed by Render
-ENTRYPOINT ["java", \
-    "-Dserver.port=${PORT}", \
-    "-Dspring.datasource.url=${DATABASE_URL}", \
-    "-Dspring.datasource.driver-class-name=org.postgresql.Driver", \
-    "-Dspring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect", \
-    "-jar", "app.jar"]
+CMD java -Dserver.port=${PORT:-8080} \
+    -Dspring.datasource.url=${DATABASE_URL} \
+    -Dspring.datasource.driver-class-name=org.postgresql.Driver \
+    -Dspring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect \
+    -Dspring.jpa.hibernate.ddl-auto=update \
+    -jar app.jar
