@@ -31,7 +31,7 @@ public class CoinGeckoServiceImpl implements CoinGeckoService {
             String url = API_URL + "?ids=" + assetsParam + "&vs_currencies=usd";
 
             HttpHeaders headers = new HttpHeaders();
-            if (apiKey != null && !apiKey.isBlank()) headers.add("x-cg-demo-api-key", apiKey);
+            if (apiKey != null && !apiKey.isBlank()) headers.add("x-cg-api-key", apiKey);
 
             ResponseEntity<String> resp =
                     restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), String.class);
