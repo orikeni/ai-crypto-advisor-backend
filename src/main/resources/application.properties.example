@@ -2,8 +2,10 @@ spring.application.name=AI_Crypto_advisor
 server.port=${PORT:8080}
 
 # Database
-spring.datasource.url=${DATABASE_URL:jdbc:sqlite:dev.db}
+spring.datasource.url=${DATABASE_URL}
 spring.datasource.driver-class-name=${DB_DRIVER:org.postgresql.Driver}
+spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
+
 
 # Hibernate
 spring.jpa.hibernate.ddl-auto=update
